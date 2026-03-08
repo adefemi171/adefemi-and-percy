@@ -6,8 +6,10 @@
  * - Compresses videos (MP4, MOV)
  * - Renames files based on folder structure (Place/Activity/Event)
  * 
- * Usage: node scripts/optimize-and-rename.js
- * 
+ * Usage:
+ *   node scripts/optimize-and-rename.js              Process all folders under src/assets/images
+ *   node scripts/optimize-and-rename.js <folderName>   Process only that folder (e.g. Amsterdam)
+ *
  * Requirements: npm install sharp --save-dev
  */
 
@@ -654,7 +656,25 @@ async function processDirectory(dir, relativePath = '', placeName = '') {
 }
 
 async function main() {
+  const folderArg = process.argv[2]
+  const targetDir = folderArg ? path.join(imagesDir, folderArg) : imagesDir
+
+  if (folderArg) {
+    if (!fs.existsSync(targetDir)) {
+      console.error(`❌ Folder not found: ${targetDir}`)
+      console.error(`   Expected a folder inside: ${imagesDir}`)
+      process.exit(1)
+    }
+    if (!fs.statSync(targetDir).isDirectory()) {
+      console.error(`❌ Not a directory: ${targetDir}`)
+      process.exit(1)
+    }
+  }
+
   console.log('🖼️  Starting image & video optimization and renaming...\n')
+  if (folderArg) {
+    console.log('📁 Targeting single folder:', folderArg)
+  }
   console.log('Backing up originals to:', backupDir)
   if (!ffmpegAvailable) {
     console.log('⚠️  FFmpeg not found. Videos will be renamed but not optimized.')
@@ -663,9 +683,10 @@ async function main() {
     console.log('✅ FFmpeg found. Videos will be optimized.\n')
   }
   console.log('')
-  
-  await processDirectory(imagesDir)
-  
+
+  const relativePath = folderArg || ''
+  await processDirectory(targetDir, relativePath, '')
+
   console.log('\n✅ Optimization and renaming complete!')
   console.log(`📦 Original files backed up to: ${backupDir}`)
   console.log('💡 Files renamed as: [place_name]_[001].jpg/mp4')

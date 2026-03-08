@@ -13,7 +13,13 @@ npm install sharp --save-dev
 
 ### Run:
 ```bash
+# All folders under src/assets/images
 npm run optimize-and-rename
+
+# Single folder only (e.g. Amsterdam)
+npm run optimize-and-rename -- Amsterdam
+# or
+node scripts/optimize-and-rename.js Amsterdam
 ```
 
 This will:

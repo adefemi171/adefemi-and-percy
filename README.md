@@ -1,23 +1,27 @@
 # Adefemi & Percyline - Family Events Website
 
-A beautiful, multi-page Vue.js website for celebrating family events including Roora (engagement) and Wedding celebrations.
+A multi-page Vue.js website for celebrating family events: Roora (engagement) and Wedding. The design uses a natural earth-tone colour palette (Clay, Fresh Bark, Olive, Sand, Herb, Seed Puff) with page-specific accents.
 
 ## Features
 
-- **Homepage**: Welcome page with event overview
-- **Roora Page**: Countdown timer, event itinerary, and RSVP form
+- **Homepage**: Welcome page with event overview (Clay & Olive theme)
+- **Roora Page**: Countdown, itinerary, and RSVP form (August 28–29, 2026); RSVP success redirects to a thank-you page
 - **Wedding Page**: Placeholder for upcoming wedding details
-- **Gallery**: Filterable photo gallery by location, event, and place
-- **Our Story**: Timeline of Adefemi & Percyline's journey
-- **FAQs**: Accordion-style frequently asked questions
-- **Registry**: Hybrid gift registry (physical items, cash funds, experiences)
+- **Gallery**: Photo gallery filterable by place
+- **Our Story**: Timeline of Adefemi & Percyline’s journey (rope/knots style, filterable by type)
+- **Love Jar**: Shared notes stored in Firebase Firestore
+- **FAQs**: Accordion FAQs with dress-code colour palette image (Clay & Sand theme)
+- **Registry**: Single “Ways to Give” section (physical items, cash funds, and experiences in one grid)
+- **Background music**: Optional play/pause with preference saved in the browser
 
 ## Technology Stack
 
-- Vue 3 with Composition API
+- Vue 3 (Composition API)
 - Vue Router 4
 - Vite
-- CSS with Design Tokens
+- CSS with design tokens and per-page theme overrides
+- Firebase (Firestore) for Love Jar
+- Formspree for RSVP
 
 ## Getting Started
 
@@ -82,71 +86,84 @@ A play/pause toggle for background music appears on all pages (bottom-right). To
 1. Add your MP3 to the `public/` folder (e.g. `La_Mer_Charles_Trenet.mp3`). The component uses this file; to change it, edit the `src` in `src/components/BackgroundMusic.vue`.
 2. The user’s choice (on/off) is saved in the browser so it persists across visits.
 
-### Design Tokens
+### Design (Colour palette & themes)
 
-Update the color palette in `src/assets/styles/tokens.css` with colors from your Figma template:
+The site uses an **earth-tone palette** defined in `src/assets/styles/tokens.css`:
 
-1. Open the Figma template: https://www.figma.com/community/file/1118254401144099088
-2. Extract color codes using Figma's color picker
-3. Update the CSS variables in `tokens.css`
+| Token            | Hex       | Use            |
+|------------------|-----------|----------------|
+| Clay             | `#7A534A` | Primary accent |
+| Fresh Bark       | `#6F7E62` | Greens         |
+| Olive            | `#B2AA87` | Secondary      |
+| Sand             | `#D2B596` | Light accent   |
+| Herb             | `#C0C5B8` | Sage / BG      |
+| Seed Puff        | `#EDE4DD` | Main background|
 
-### Event Dates
+The palette is based on `public/color_palette.jpeg`. Each page can use a different lead colour via `#app[data-page="…"]` overrides in `tokens.css` (e.g. Home: Clay & Olive; FAQs: Clay & Sand). To change a page’s theme, edit the corresponding `#app[data-page="…"]` block.
 
-Update the Roora date in `src/views/RooraPage.vue`:
-```javascript
-const rooraDate = ref('2025-06-15T18:00:00') // Update with actual date
-```
+### Event dates
 
-### Content Customization
+Roora date and itinerary are in `src/views/RooraPage.vue`. Update the `rooraDate` and `itinerary` arrays as needed.
 
-- **Itinerary**: Update `itinerary` array in `src/views/RooraPage.vue`
-- **Gallery Images**: Add images to `src/assets/images/` and update the `images` array in `src/views/GalleryPage.vue`
-- **Story Milestones**: Update `milestones` array in `src/views/OurStoryPage.vue`
-- **FAQs**: Update `faqs` array in `src/views/FAQsPage.vue`
-- **Registry**: Update registry information in `src/views/RegistryPage.vue`
+### Content customization
 
-## Project Structure
+- **Gallery**: Add images under `src/assets/images/` (folder per place); the app discovers them via `src/utils/imageLoader.js`. Filter is by place only.
+- **Our Story**: Edit `milestones` and narrative in `src/views/OurStoryPage.vue`; images are loaded from `src/assets/images/` (see `imageLoader.js`).
+- **FAQs**: Edit the `faqs` array in `src/views/FAQsPage.vue`. The “What should I wear?” answer can include an image (e.g. `public/color_palette.jpeg`).
+- **Registry**: Edit the `registryItems` computed in `src/views/RegistryPage.vue` (physical, cash, and experience entries in one list).
+
+## Project structure
 
 ```
 src/
 ├── components/
+│   ├── BackgroundMusic.vue
 │   ├── CountdownTimer.vue
 │   ├── RSVPForm.vue
 │   ├── GalleryFilter.vue
 │   ├── Navigation.vue
-│   └── Footer.vue
+│   ├── Footer.vue
+│   └── AddNoteForm.vue       (Love Jar)
 ├── views/
 │   ├── HomePage.vue
 │   ├── RooraPage.vue
+│   ├── RSVPThankYouPage.vue
 │   ├── WeddingPage.vue
 │   ├── GalleryPage.vue
 │   ├── OurStoryPage.vue
+│   ├── LoveJarPage.vue
 │   ├── FAQsPage.vue
 │   └── RegistryPage.vue
 ├── router/
-│   └── index.js
+│   └── index.js              (routes + scroll behavior)
+├── utils/
+│   └── imageLoader.js       (Gallery & Our Story images)
 ├── assets/
-│   ├── images/
 │   └── styles/
-│       ├── tokens.css
+│       ├── tokens.css        (palette + per-page themes)
 │       └── main.css
+├── firebase.js               (Firestore for Love Jar)
 ├── App.vue
 └── main.js
+public/
+├── color_palette.jpeg        (dress-code palette; referenced in FAQs)
+└── La_Mer_Charles_Trenet.mp3 (optional background music)
 ```
 
 ## Customization
 
-### Colors
+### Colours
 
-All colors are defined in `src/assets/styles/tokens.css` as CSS variables. Update these to match your Figma template.
+Global and page-specific colours live in `src/assets/styles/tokens.css`: palette variables (`--palette-clay`, etc.) and semantic tokens (`--primary-color`, `--bg-secondary`, etc.). Per-page overrides use `#app[data-page="route-name"]` (e.g. `fa-qs` for FAQs).
 
 ### Typography
 
-Fonts are loaded from Google Fonts in `index.html`. The design tokens define font families, sizes, and weights.
+Fonts are loaded from Google Fonts in `index.html`. Families, sizes, and weights are in `tokens.css`.
 
 ### Images
 
-Add your images to `src/assets/images/` and update the image paths in the respective components.
+- **Gallery & Our Story**: Add images under `src/assets/images/` (one folder per place/event). `src/utils/imageLoader.js` discovers them; see `IMAGE_OPTIMIZATION.md` for optimisation scripts.
+- **Static assets** (e.g. dress-code palette): Place in `public/` and reference by path (e.g. `/color_palette.jpeg`).
 
 ## Browser Support
 
@@ -161,7 +178,7 @@ Private project for Adefemi & Percyline
 
 ## Notes
 
-- The RSVP form currently uses a placeholder endpoint. Configure Formspree or EmailJS for actual submissions.
-- Gallery images use placeholder URLs. Replace with actual image paths.
-- Registry links are placeholders. Update with actual registry URLs.
-- Payment handles in the Registry page need to be updated with actual information.
+- **RSVP**: Formspree endpoint is set in `RSVPForm.vue`; successful submit redirects to `/rsvp/thank-you`.
+- **Love Jar**: Requires Firebase project and `VITE_FIREBASE_*` env vars (see Configuration).
+- **Registry**: Update links and handles in the `registryItems` computed in `RegistryPage.vue`.
+- **Deployment**: Build with `npm run build`; `dist/` is published. Netlify config is in `netlify.toml` (SPA redirect).
