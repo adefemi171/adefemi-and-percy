@@ -1,0 +1,37 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies and build
+node_modules
+dist
+dist-ssr
+
+# Environment (secrets: Firebase, etc.)
+.env
+.env.local
+.env.*.local
+*.local
+
+# Netlify CLI local state (root netlify.toml is committed)
+.netlify
+.vscode
+
+# Image optimization backup (optional; can be large)
+src/assets/images-backup
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
