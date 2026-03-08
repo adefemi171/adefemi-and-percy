@@ -1,46 +1,53 @@
-/* Design Tokens - Colors from Eden Rose Template */
-/* Colors from: https://www.figma.com/community/file/1305185920700044554 */
+/* Design Tokens - Earth tone palette (Clay, Fresh Bark, Olive, Sand, Herb, Seed Puff) */
 
 :root {
-  /* Primary Colors - Eden Rose */
-  --primary-color: #C6754D; /* Warm terracotta/rose */
-  --primary-light: #F0CCBB; /* Light peach/rose */
-  --primary-dark: #A85D3A; /* Darker shade for hover states */
+  /* Palette - from color_palette.jpeg */
+  --palette-clay: #7A534A;
+  --palette-fresh-bark: #6F7E62;
+  --palette-olive: #B2AA87;
+  --palette-sand: #D2B596;
+  --palette-herb: #C0C5B8;
+  --palette-seed-puff: #EDE4DD;
+
+  /* Primary Colors - default (Clay-led) */
+  --primary-color: var(--palette-clay);
+  --primary-light: var(--palette-sand);
+  --primary-dark: #5C3E38; /* Darker clay for hover */
   
   /* Secondary Colors */
-  --secondary-color: #97917A; /* Muted sage/beige */
-  --secondary-light: #B8B3A0;
-  --secondary-dark: #7A7562;
+  --secondary-color: var(--palette-olive);
+  --secondary-light: var(--palette-herb);
+  --secondary-dark: var(--palette-fresh-bark);
   
   /* Accent Colors */
-  --accent-rose: #F0CCBB; /* Same as primary-light */
-  --accent-cream: #FCF9F7; /* Background color */
-  --accent-sage: #97917A; /* Same as secondary */
+  --accent-rose: var(--palette-sand);
+  --accent-cream: var(--palette-seed-puff);
+  --accent-sage: var(--palette-herb);
   
   /* Neutral Colors */
   --neutral-white: #FFFFFF;
-  --neutral-ivory: #FCF9F7; /* Background color */
-  --neutral-off-white: #FCF9F7;
-  --neutral-light-gray: #E5E5E5;
-  --neutral-gray: #CCCCCC;
-  --neutral-dark-gray: #666666;
-  --neutral-charcoal: #2B1105; /* Text primary */
+  --neutral-ivory: var(--palette-seed-puff);
+  --neutral-off-white: var(--palette-seed-puff);
+  --neutral-light-gray: var(--palette-herb);
+  --neutral-gray: var(--palette-olive);
+  --neutral-dark-gray: #5a5548;
+  --neutral-charcoal: #2B1105;
   --neutral-black: #000000;
   
   /* Text Colors */
-  --text-primary: #2B1105; /* Dark brown from template */
-  --text-secondary: #666666;
+  --text-primary: #2B1105;
+  --text-secondary: #5a5548;
   --text-light: #FFFFFF;
-  --text-muted: #97917A; /* Using secondary color */
+  --text-muted: var(--palette-olive);
   
   /* Background Colors */
-  --bg-primary: #FCF9F7; /* Warm off-white from template */
-  --bg-secondary: #F0CCBB; /* Primary light for alternating sections */
-  --bg-overlay: rgba(43, 17, 5, 0.7); /* Using text-primary with opacity */
+  --bg-primary: var(--palette-seed-puff);
+  --bg-secondary: var(--palette-herb);
+  --bg-overlay: rgba(43, 17, 5, 0.7);
   
   /* Image & Video Colors */
-  --image-color: #C6754D; /* Primary color */
-  --video-bg: #FCF9F7; /* Background color */
+  --image-color: var(--palette-clay);
+  --video-bg: var(--palette-seed-puff);
   
   /* Typography */
   --font-heading: 'Playfair Display', 'Cormorant Garamond', serif;
@@ -102,4 +109,56 @@
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1536px;
+}
+
+/* Per-page theme accents (same palette, different lead color) */
+#app[data-page="home"] {
+  --primary-color: var(--palette-clay);
+  --bg-secondary: var(--palette-olive);
+}
+
+#app[data-page="roora"] {
+  --primary-color: var(--palette-fresh-bark);
+  --primary-light: var(--palette-herb);
+  --primary-dark: #5a6350;
+  --bg-secondary: var(--palette-olive);
+}
+
+#app[data-page="our-story"] {
+  --primary-color: var(--palette-olive);
+  --primary-light: var(--palette-sand);
+  --primary-dark: #8a8268;
+  --bg-secondary: var(--palette-sand);
+}
+
+#app[data-page="gallery"] {
+  --primary-color: var(--palette-clay);
+  --bg-secondary: var(--palette-sand);
+}
+
+#app[data-page="love-jar"] {
+  --primary-color: var(--palette-fresh-bark);
+  --primary-light: var(--palette-herb);
+  --bg-secondary: var(--palette-seed-puff);
+}
+
+#app[data-page="fa-qs"] {
+  --primary-color: var(--palette-clay);
+  --bg-secondary: var(--palette-sand);
+}
+
+#app[data-page="registry"] {
+  --primary-color: var(--palette-clay);
+  --bg-secondary: var(--palette-sand);
+}
+
+#app[data-page="wedding"] {
+  --primary-color: var(--palette-sand);
+  --primary-dark: var(--palette-olive);
+  --bg-secondary: var(--palette-seed-puff);
+}
+
+#app[data-page="rsvp-thank-you"] {
+  --primary-color: var(--palette-clay);
+  --bg-secondary: var(--palette-herb);
 }

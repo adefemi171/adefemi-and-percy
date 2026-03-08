@@ -113,6 +113,7 @@ const eventTypes = [
 
 // Enhanced milestones data - in chronological order (month & year)
 const milestones = ref([
+  /* Engagement – September 2026 (commented out for now)
   {
     id: '7',
     date: '2026-09-01',
@@ -123,6 +124,7 @@ const milestones = ref([
     image: 'https://via.placeholder.com/400x300?text=Engagement',
     tags: ['engagement', 'milestone', 'love']
   },
+  */
   {
     id: '2',
     date: '2024-04-15',
@@ -130,7 +132,7 @@ const milestones = ref([
     title: 'First Date',
     description: "Our first meeting was also our first date at Ayla. There was heavy rain and wind, she even lost her umbrella on the way, but she made it, and I was there wondering why she wasn't travelling with one. We talked for hours and I knew this was something special.",
     location: 'Ayla Restaurant, Rotterdam',
-    image: getFirstImageByLocation('Rotterdam') || 'https://via.placeholder.com/400x300?text=First+Date',
+    image: getFirstImageByLocation('Netherlands') || getFirstImageByLocation('Rotterdam') || 'https://via.placeholder.com/400x300?text=First+Date',
     tags: ['romantic', 'first']
   },
   {
@@ -168,9 +170,9 @@ const milestones = ref([
     date: '2025-12-25',
     type: 'event',
     title: 'First Christmas Together',
-    description: 'Celebrating our first holiday season together in Innsbruck.',
+    description: 'Celebrating our first holiday season together on a road trip through Alpine countries.',
     location: 'Innsbruck',
-    image: getFirstImageByLocation('Innsbruck') || 'https://via.placeholder.com/400x300?text=Christmas',
+    image: getFirstImageByLocation('December 2025') || getFirstImageByLocation('Innsbruck') || 'https://via.placeholder.com/400x300?text=Christmas',
     tags: ['holiday', 'family']
   }
 ])

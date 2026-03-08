@@ -7,92 +7,38 @@
       </div>
     </section>
 
-    <!-- Physical Items Section -->
+    <!-- Gifts: Physical, Cash & Experiences -->
     <section class="section registry-section">
       <div class="container">
-        <h2 class="section-title">Physical Items</h2>
-        <p class="section-description">We've registered at the following stores:</p>
+        <h2 class="section-title">Ways to Give</h2>
+        <p class="section-description">Physical items, cash funds, or experiences—we appreciate your thoughtfulness.</p>
         <div class="registry-grid">
           <div 
-            v-for="(registry, index) in physicalRegistries" 
+            v-for="(item, index) in registryItems" 
             :key="index"
             class="registry-card"
+            :class="`registry-card--${item.type}`"
           >
-            <div class="registry-logo">
-              <img :src="registry.logo" :alt="registry.name" v-if="registry.logo" />
-              <div v-else class="registry-placeholder">{{ registry.name.charAt(0) }}</div>
+            <span class="registry-badge">{{ item.typeLabel }}</span>
+            <div class="registry-icon">
+              <img v-if="item.logo" :src="item.logo" :alt="item.name" />
+              <span v-else>{{ item.icon }}</span>
             </div>
-            <h3 class="registry-name">{{ registry.name }}</h3>
-            <p class="registry-description">{{ registry.description }}</p>
+            <h3 class="registry-name">{{ item.name }}</h3>
+            <p v-if="item.description || item.handle" class="registry-description">{{ item.description || item.handle }}</p>
+            <div v-if="item.qrCode" class="qr-code">
+              <img :src="item.qrCode" :alt="`${item.name} QR Code`" />
+            </div>
             <a 
-              :href="registry.url" 
+              v-if="item.link"
+              :href="item.link" 
               target="_blank" 
               rel="noopener noreferrer"
               class="btn btn-primary"
             >
-              Visit Registry
+              {{ item.buttonText }}
             </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Cash Funds Section -->
-    <section class="section registry-section cash-funds">
-      <div class="container">
-        <h2 class="section-title">Cash Funds</h2>
-        <p class="section-description">If you prefer to contribute monetarily, you can use any of these options:</p>
-        <div class="cash-funds-grid">
-          <div 
-            v-for="(payment, index) in cashFunds" 
-            :key="index"
-            class="payment-card"
-          >
-            <div class="payment-icon">{{ payment.icon }}</div>
-            <h3 class="payment-name">{{ payment.name }}</h3>
-            <div class="payment-info">
-              <p class="payment-handle">{{ payment.handle }}</p>
-              <div v-if="payment.qrCode" class="qr-code">
-                <img :src="payment.qrCode" :alt="`${payment.name} QR Code`" />
-              </div>
-            </div>
-            <a 
-              v-if="payment.link"
-              :href="payment.link" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="btn btn-secondary"
-            >
-              Send via {{ payment.name }}
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Experiences Section -->
-    <section class="section registry-section experiences">
-      <div class="container">
-        <h2 class="section-title">Experiences</h2>
-        <p class="section-description">Help us create unforgettable memories:</p>
-        <div class="registry-grid">
-          <div 
-            v-for="(experience, index) in experiences" 
-            :key="index"
-            class="registry-card"
-          >
-            <div class="experience-icon">{{ experience.icon }}</div>
-            <h3 class="registry-name">{{ experience.name }}</h3>
-            <p class="registry-description">{{ experience.description }}</p>
-            <a 
-              v-if="experience.url"
-              :href="experience.url" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="btn btn-primary"
-            >
-              Learn More
-            </a>
+            <p v-else class="registry-nolink">Use the details above to send.</p>
           </div>
         </div>
       </div>
@@ -115,83 +61,87 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed } from 'vue'
 
-// Physical registries - update with actual registry information
-const physicalRegistries = ref([
-  {
-    name: 'Amazon',
-    description: 'Browse our Amazon registry for household items and more.',
-    url: 'https://www.amazon.com/wedding/registry',
-    logo: null // Add logo URL if available
-  },
-  {
-    name: 'Target',
-    description: 'Find items from our Target registry.',
-    url: 'https://www.target.com/gift-registry',
-    logo: null
-  },
-  {
-    name: 'Zola',
-    description: 'Our curated Zola registry with items we love.',
-    url: 'https://www.zola.com/registry',
-    logo: null
-  }
-])
-
-// Cash fund options - update with actual payment information
-const cashFunds = ref([
-  {
-    name: 'Venmo',
-    handle: '@YourVenmoHandle',
-    icon: '💸',
-    link: 'https://venmo.com',
-    qrCode: null // Add QR code image URL if available
-  },
-  {
-    name: 'PayPal',
-    handle: 'your-email@example.com',
-    icon: '💳',
-    link: 'https://paypal.me',
-    qrCode: null
-  },
-  {
-    name: 'Zelle',
-    handle: 'your-phone@zelle.com',
-    icon: '📱',
-    link: null,
-    qrCode: null
-  },
-  {
-    name: 'Cash App',
-    handle: '$YourCashAppHandle',
-    icon: '💵',
-    link: 'https://cash.app',
-    qrCode: null
-  }
-])
-
-// Experience gifts - update with actual experience information
-const experiences = ref([
-  {
-    name: 'Honeymoon Fund',
-    description: 'Help us create amazing memories on our honeymoon.',
-    icon: '✈️',
-    url: 'https://www.honeyfund.com' // or Zola Cash Funds
-  },
-  {
-    name: 'Date Night Experiences',
-    description: 'Contribute to special date nights and adventures.',
-    icon: '🍷',
-    url: null
-  },
-  {
-    name: 'Home Improvement',
-    description: 'Help us make our home even more special.',
-    icon: '🏠',
-    url: null
-  }
-])
+// Merged registry: physical items, cash funds, and experiences
+const registryItems = computed(() => {
+  const physical = [
+    {
+      type: 'physical',
+      typeLabel: 'Physical',
+      name: 'Amazon',
+      description: 'Browse our Amazon registry for household items and more.',
+      icon: '🛒',
+      logo: null,
+      link: 'https://www.amazon.com/wedding/registry',
+      buttonText: 'Visit Registry',
+      qrCode: null
+    }
+  ]
+  const cash = [
+    {
+      type: 'cash',
+      typeLabel: 'Cash',
+      name: 'PayPal',
+      icon: '💳',
+      link: 'https://www.paypal.me/Adefemi171',
+      buttonText: 'Send via PayPal',
+      qrCode: null
+    },
+    {
+      type: 'cash',
+      typeLabel: 'Cash',
+      name: 'Revolut',
+      icon: '💳',
+      link: 'https://revolut.me/adefemi171',
+      buttonText: 'Send via Revolut',
+      qrCode: null
+    },
+    {
+      type: 'cash',
+      typeLabel: 'Cash',
+      name: 'Crypto (BTC, ETH, etc.)',
+      handle: 'Your wallet address',
+      icon: '₿',
+      link: null,
+      buttonText: null,
+      qrCode: null
+    }
+  ]
+  const experiences = [
+    {
+      type: 'experience',
+      typeLabel: 'Experience',
+      name: 'Honeymoon Fund',
+      description: 'Help us create amazing memories on our honeymoon.',
+      icon: '✈️',
+      link: 'https://www.honeyfund.com',
+      buttonText: 'Learn More',
+      qrCode: null
+    },
+    {
+      type: 'experience',
+      typeLabel: 'Experience',
+      name: 'Date Night Experiences',
+      description: 'Contribute to special date nights and adventures.',
+      icon: '🍷',
+      link: null,
+      buttonText: null,
+      qrCode: null
+    },
+    {
+      type: 'experience',
+      typeLabel: 'Experience',
+      name: 'Home Improvement',
+      description: 'Help us make our home even more special.',
+      icon: '🏠',
+      link: null,
+      buttonText: null,
+      qrCode: null
+    }
+  ]
+  return [...physical, ...cash, ...experiences]
+})
 </script>
 
 <style scoped>
@@ -222,14 +172,6 @@ const experiences = ref([
   background-color: var(--bg-primary);
 }
 
-.registry-section.cash-funds {
-  background-color: var(--bg-secondary);
-}
-
-.registry-section.experiences {
-  background-color: var(--bg-primary);
-}
-
 .section-description {
   text-align: center;
   color: var(--text-secondary);
@@ -243,12 +185,14 @@ const experiences = ref([
 }
 
 .registry-card {
+  position: relative;
   background: var(--bg-primary);
   padding: var(--spacing-2xl);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
   text-align: center;
   transition: transform var(--transition-base), box-shadow var(--transition-base);
+  border: 1px solid var(--neutral-light-gray);
 }
 
 .registry-card:hover {
@@ -256,7 +200,21 @@ const experiences = ref([
   box-shadow: var(--shadow-lg);
 }
 
-.registry-logo {
+.registry-badge {
+  position: absolute;
+  top: var(--spacing-md);
+  right: var(--spacing-md);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--primary-color);
+  background: var(--primary-light);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-full);
+}
+
+.registry-icon {
   width: 80px;
   height: 80px;
   margin: 0 auto var(--spacing-lg);
@@ -265,18 +223,13 @@ const experiences = ref([
   justify-content: center;
   background: var(--bg-secondary);
   border-radius: var(--radius-lg);
+  font-size: var(--font-size-4xl);
 }
 
-.registry-logo img {
+.registry-icon img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-}
-
-.registry-placeholder {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--primary-color);
 }
 
 .registry-name {
@@ -289,45 +242,13 @@ const experiences = ref([
   color: var(--text-secondary);
   margin-bottom: var(--spacing-lg);
   line-height: var(--line-height-relaxed);
+  word-break: break-word;
 }
 
-.cash-funds-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: var(--spacing-xl);
-}
-
-.payment-card {
-  background: var(--bg-primary);
-  padding: var(--spacing-2xl);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-md);
-  text-align: center;
-  transition: transform var(--transition-base), box-shadow var(--transition-base);
-}
-
-.payment-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-
-.payment-icon {
-  font-size: var(--font-size-5xl);
-  margin-bottom: var(--spacing-md);
-}
-
-.payment-name {
-  font-size: var(--font-size-xl);
-  color: var(--primary-color);
-  margin-bottom: var(--spacing-md);
-}
-
-.payment-handle {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-medium);
-  color: var(--text-primary);
-  margin-bottom: var(--spacing-md);
-  word-break: break-all;
+.registry-nolink {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin-top: var(--spacing-md);
 }
 
 .qr-code {
@@ -339,11 +260,6 @@ const experiences = ref([
   height: 150px;
   border: 2px solid var(--neutral-light-gray);
   border-radius: var(--radius-md);
-}
-
-.experience-icon {
-  font-size: var(--font-size-5xl);
-  margin-bottom: var(--spacing-md);
 }
 
 .thank-you-section {
@@ -376,8 +292,7 @@ const experiences = ref([
 }
 
 @media (max-width: 768px) {
-  .registry-grid,
-  .cash-funds-grid {
+  .registry-grid {
     grid-template-columns: 1fr;
   }
 }

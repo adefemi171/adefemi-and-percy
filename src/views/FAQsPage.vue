@@ -25,6 +25,12 @@
             </button>
             <div class="faq-answer" :class="{ 'open': faq.open }">
               <p>{{ faq.answer }}</p>
+              <img
+                v-if="faq.image"
+                :src="encodeURI(faq.image)"
+                :alt="faq.imageAlt || 'Dress code colour palette'"
+                class="faq-answer-image"
+              />
             </div>
           </div>
         </div>
@@ -45,7 +51,7 @@ import { ref } from 'vue'
 const faqs = ref([
   {
     question: 'What is Roora?',
-    answer: 'Roora is a traditional engagement ceremony that celebrates the coming together of two families. It\'s a beautiful cultural celebration that marks an important milestone in our journey.',
+    answer: "A roora celebration is a traditional Shona marriage ceremony in Zimbabwe where a prospective groom pays a bride price (lobola) to the bride's family, symbolizing the union of two families. It is a festive occasion involving negotiations, gifts, traditional music, dancing, and large feasts, often serving as a, or in addition to, a formal wedding",
     open: false
   },
   {
@@ -60,8 +66,10 @@ const faqs = ref([
   },
   {
     question: 'What should I wear?',
-    answer: 'We recommend [dress code]. Please feel free to wear traditional attire or semi-formal clothing that makes you feel comfortable and celebratory.',
-    open: false
+    answer: 'Please feel free to wear traditional attire or semi-formal clothing that makes you feel comfortable and celebratory. Our colour theme is neutrals and earth tones—see the palette below for inspiration.',
+    open: false,
+    image: '/color_palette.jpeg',
+    imageAlt: 'Natural earth tone colour palette for dress code'
   },
   {
     question: 'Can I bring a plus one?',
@@ -179,8 +187,18 @@ const toggleFaq = (index) => {
 }
 
 .faq-answer.open {
-  max-height: 500px;
+  max-height: 1200px;
   padding: 0 var(--spacing-xl) var(--spacing-xl);
+}
+
+.faq-answer-image {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  margin-top: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--neutral-light-gray);
 }
 
 .faq-answer p {

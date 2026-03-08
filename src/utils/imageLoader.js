@@ -28,16 +28,22 @@ function getPlaceDisplayName(folderName) {
     'Amsterdam': 'Amsterdam',
     'Bern': 'Bern',
     'Birthdays': 'Birthdays',
+    'December_2025': 'December 2025',
+    'December 2025': 'December 2025',
     'Gran_Canary': 'Gran Canary',
     'Gran Canary': 'Gran Canary',
     'Home': 'Home',
     'Innsbruck': 'Innsbruck',
     'Luxemborg': 'Luxemborg',
     'Munich': 'Munich',
+    'Netherlands': 'Netherlands',
+    'netherlands': 'Netherlands',
     'Rome': 'Rome',
     'Rotterdam': 'Rotterdam',
     'The_Hague': 'The Hague',
     'The Hague': 'The Hague',
+    'us_two': 'Us Two',
+    'Us Two': 'Us Two',
     'Vaduz': 'Vaduz'
   }
 
@@ -146,21 +152,13 @@ export function getFilterOptions() {
 // Function to get first image from a location (aligned with current assets/images folders)
 export function getFirstImageByLocation(location) {
   const locationMap = {
-    'Amsterdam': 'Amsterdam',
-    'Bern': 'Bern',
-    'Birthdays': 'Birthdays',
-    'Gran Canary, Spain': 'Gran Canary',
+    'December 2025': 'December 2025',
     'Gran Canary': 'Gran Canary',
-    'Home': 'Home',
-    'Innsbruck': 'Innsbruck',
-    'Luxemborg': 'Luxemborg',
-    'Munich, Germany': 'Munich',
     'Munich': 'Munich',
+    'Netherlands': 'Netherlands',
     'Rome, Italy': 'Rome',
     'Rome': 'Rome',
-    'Rotterdam': 'Rotterdam',
-    'The Hague': 'The Hague',
-    'Vaduz': 'Vaduz'
+    'Us Two': 'Us Two'
   }
 
   const folderName = locationMap[location] || location
