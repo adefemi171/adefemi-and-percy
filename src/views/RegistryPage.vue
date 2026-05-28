@@ -11,7 +11,7 @@
     <section class="section registry-section">
       <div class="container">
         <h2 class="section-title">Ways to Give</h2>
-        <p class="section-description">Physical items, cash funds, or experiences—we appreciate your thoughtfulness.</p>
+        <p class="section-description">Ways to give—we appreciate your thoughtfulness.</p>
         <div class="registry-grid">
           <div 
             v-for="(item, index) in registryItems" 
@@ -25,7 +25,13 @@
               <span v-else>{{ item.icon }}</span>
             </div>
             <h3 class="registry-name">{{ item.name }}</h3>
-            <p v-if="item.description || item.handle" class="registry-description">{{ item.description || item.handle }}</p>
+            <div v-if="item.wallets" class="wallet-list">
+              <div v-for="wallet in item.wallets" :key="wallet.symbol" class="wallet-item">
+                <p class="wallet-label">{{ wallet.symbol }} ({{ wallet.network }})</p>
+                <p class="wallet-address">{{ wallet.address }}</p>
+              </div>
+            </div>
+            <p v-else-if="item.description || item.handle" class="registry-description">{{ item.description || item.handle }}</p>
             <div v-if="item.qrCode" class="qr-code">
               <img :src="item.qrCode" :alt="`${item.name} QR Code`" />
             </div>
@@ -65,19 +71,6 @@ import { computed } from 'vue'
 
 // Merged registry: physical items, cash funds, and experiences
 const registryItems = computed(() => {
-  const physical = [
-    {
-      type: 'physical',
-      typeLabel: 'Physical',
-      name: 'Amazon',
-      description: 'Browse our Amazon registry for household items and more.',
-      icon: '🛒',
-      logo: null,
-      link: 'https://www.amazon.com/wedding/registry',
-      buttonText: 'Visit Registry',
-      qrCode: null
-    }
-  ]
   const cash = [
     {
       type: 'cash',
@@ -101,46 +94,30 @@ const registryItems = computed(() => {
       type: 'cash',
       typeLabel: 'Cash',
       name: 'Crypto (BTC, ETH, etc.)',
-      handle: 'Your wallet address',
+      wallets: [
+        {
+          symbol: 'ETH',
+          network: 'Ethereum',
+          address: '0x5D0b9def00f079a99a8Cd69183aD08195c167ea4'
+        },
+        {
+          symbol: 'BTC',
+          network: 'BTC',
+          address: '3KugRpnJ7oU74yRGm1Ly87X7P8RWxNHE7M'
+        },
+        {
+          symbol: 'USDC',
+          network: 'Ethereum',
+          address: '0xaCf0f97590a124B49Ae59707d898dBBB540C356b'
+        }
+      ],
       icon: '₿',
       link: null,
       buttonText: null,
       qrCode: null
     }
   ]
-  const experiences = [
-    {
-      type: 'experience',
-      typeLabel: 'Experience',
-      name: 'Honeymoon Fund',
-      description: 'Help us create amazing memories on our honeymoon.',
-      icon: '✈️',
-      link: 'https://www.honeyfund.com',
-      buttonText: 'Learn More',
-      qrCode: null
-    },
-    {
-      type: 'experience',
-      typeLabel: 'Experience',
-      name: 'Date Night Experiences',
-      description: 'Contribute to special date nights and adventures.',
-      icon: '🍷',
-      link: null,
-      buttonText: null,
-      qrCode: null
-    },
-    {
-      type: 'experience',
-      typeLabel: 'Experience',
-      name: 'Home Improvement',
-      description: 'Help us make our home even more special.',
-      icon: '🏠',
-      link: null,
-      buttonText: null,
-      qrCode: null
-    }
-  ]
-  return [...physical, ...cash, ...experiences]
+  return cash
 })
 </script>
 
@@ -243,6 +220,28 @@ const registryItems = computed(() => {
   margin-bottom: var(--spacing-lg);
   line-height: var(--line-height-relaxed);
   word-break: break-word;
+}
+
+.wallet-list {
+  margin-bottom: var(--spacing-lg);
+  text-align: left;
+}
+
+.wallet-item + .wallet-item {
+  margin-top: var(--spacing-md);
+}
+
+.wallet-label {
+  margin: 0 0 var(--spacing-xs);
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+.wallet-address {
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+  word-break: break-all;
 }
 
 .registry-nolink {

@@ -19,10 +19,10 @@
       
       <ul class="nav-menu" :class="{ 'active': isMenuOpen }">
         <li><router-link to="/" @click="closeMenu">Home</router-link></li>
+        <li><router-link to="/our-story" @click="closeMenu">Our Story</router-link></li>
         <li><router-link to="/roora" @click="closeMenu">Roora</router-link></li>
         <li><router-link to="/wedding" @click="closeMenu">Wedding</router-link></li>
         <li><router-link to="/gallery" @click="closeMenu">Gallery</router-link></li>
-        <li><router-link to="/our-story" @click="closeMenu">Our Story</router-link></li>
         <li><router-link to="/love-jar" @click="closeMenu">Love Jar</router-link></li>
         <li><router-link to="/faqs" @click="closeMenu">FAQs</router-link></li>
         <li><router-link to="/registry" @click="closeMenu">Registry</router-link></li>

@@ -113,8 +113,10 @@
 
 /* Per-page theme accents (same palette, different lead color) */
 #app[data-page="home"] {
-  --primary-color: var(--palette-clay);
-  --bg-secondary: var(--palette-olive);
+  /* Lighter clay + sand (softer than base palette) */
+  --primary-color: #9f7a70;
+  --primary-dark: #7d5e54;
+  --bg-secondary: #e3d6c8;
 }
 
 #app[data-page="roora"] {

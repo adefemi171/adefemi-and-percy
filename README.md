@@ -4,7 +4,7 @@ A multi-page Vue.js website for celebrating family events: Roora (engagement) an
 
 ## Features
 
-- **Homepage**: Welcome page with event overview (Clay & Olive theme)
+- **Homepage**: Welcome page with event overview (lighter Clay & Sand accents)
 - **Roora Page**: Countdown, itinerary, and RSVP form (August 28–29, 2026); RSVP success redirects to a thank-you page
 - **Wedding Page**: Placeholder for upcoming wedding details
 - **Gallery**: Photo gallery filterable by place
@@ -99,7 +99,21 @@ The site uses an **earth-tone palette** defined in `src/assets/styles/tokens.css
 | Herb             | `#C0C5B8` | Sage / BG      |
 | Seed Puff        | `#EDE4DD` | Main background|
 
-The palette is based on `public/color_palette.jpeg`. Each page can use a different lead colour via `#app[data-page="…"]` overrides in `tokens.css` (e.g. Home: Clay & Olive; FAQs: Clay & Sand). To change a page’s theme, edit the corresponding `#app[data-page="…"]` block.
+The palette is based on `public/color_palette.jpeg`. Per-route themes are set on `#app` with `data-page` (derived from the Vue route name, e.g. FAQs → `fa-qs`). Edit the matching `#app[data-page="…"]` block in `tokens.css` to change a page.
+
+**Page colour mix** — each row lists which palette colours drive **primary** (links, headings, primary buttons) and **secondary band** (`--bg-secondary`, used for alternating sections / heroes where the app uses that token). Unless a row sets **primary light** / **primary dark**, the global defaults apply (`Sand` / darker clay `#5C3E38`). **Page background** (`--bg-primary`) is **Seed Puff** on all routes unless a view sets its own background.
+
+| Page | Route | `data-page` | Primary | Primary light / dark (if set) | Secondary band (`--bg-secondary`) |
+|------|-------|-------------|---------|------------------------------|----------------------------------|
+| Home | `/` | `home` | Lighter clay `#9f7a70` | dark: `#7d5e54` | Lighter sand `#e3d6c8` |
+| Roora | `/roora` | `roora` | Fresh Bark | Herb / `#5a6350` | Olive |
+| Wedding | `/wedding` | `wedding` | Sand | dark: Olive | Seed Puff |
+| Gallery | `/gallery` | `gallery` | Clay | — | Sand |
+| Our Story | `/our-story` | `our-story` | Olive | Sand / `#8a8268` | Sand |
+| Love Jar | `/love-jar` | `love-jar` | Fresh Bark | Herb | Seed Puff |
+| FAQs | `/faqs` | `fa-qs` | Clay | — | Sand |
+| Registry | `/registry` | `registry` | Clay | — | Sand |
+| RSVP thank you | `/rsvp/thank-you` | `rsvp-thank-you` | Clay | — | Herb |
 
 ### Event dates
 

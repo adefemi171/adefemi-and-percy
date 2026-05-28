@@ -11,10 +11,10 @@
           <h4 class="footer-heading">Quick Links</h4>
           <ul class="footer-links">
             <li><router-link to="/">Home</router-link></li>
+            <li><router-link to="/our-story">Our Story</router-link></li>
             <li><router-link to="/roora">Roora</router-link></li>
             <li><router-link to="/wedding">Wedding</router-link></li>
             <li><router-link to="/gallery">Gallery</router-link></li>
-            <li><router-link to="/our-story">Our Story</router-link></li>
             <li><router-link to="/love-jar">Love Jar</router-link></li>
             <li><router-link to="/faqs">FAQs</router-link></li>
             <li><router-link to="/registry">Registry</router-link></li>

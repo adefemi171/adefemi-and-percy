@@ -2,13 +2,19 @@
   <div class="home-page">
     <!-- Hero Section -->
     <section class="hero">
-      <div class="hero-overlay"></div>
+      <img
+        :src="heroBackground"
+        alt="Adefemi and Percyline"
+        class="hero-bg"
+        fetchpriority="high"
+      />
+      <div class="hero-scrim" aria-hidden="true"></div>
       <div class="hero-content">
         <h1 class="hero-title">Adefemi & Percyline</h1>
         <p class="hero-subtitle">Join us as we celebrate our journey together</p>
         <div class="hero-buttons">
-          <router-link to="/roora" class="btn btn-primary">Roora</router-link>
-          <router-link to="/wedding" class="btn btn-secondary">Wedding</router-link>
+          <router-link to="/roora" class="btn btn-primary hero-btn">Roora</router-link>
+          <router-link to="/wedding" class="btn hero-btn hero-btn-outline">Wedding</router-link>
         </div>
       </div>
     </section>
@@ -19,7 +25,6 @@
         <h2 class="section-title">Upcoming Events</h2>
         <div class="events-grid">
           <div class="event-card">
-            <div class="event-card-image roora-bg"></div>
             <div class="event-card-content">
               <h3>Roora</h3>
               <p>Our engagement celebration</p>
@@ -28,7 +33,6 @@
           </div>
           
           <div class="event-card">
-            <div class="event-card-image wedding-bg"></div>
             <div class="event-card-content">
               <h3>Wedding</h3>
               <p>Details coming soon</p>
@@ -44,16 +48,16 @@
       <div class="container">
         <h2 class="section-title">Explore</h2>
         <div class="nav-grid">
-          <router-link to="/gallery" class="nav-card">
-            <div class="nav-card-icon">📸</div>
-            <h3>Gallery</h3>
-            <p>View our memories</p>
-          </router-link>
-          
           <router-link to="/our-story" class="nav-card">
             <div class="nav-card-icon">💕</div>
             <h3>Our Story</h3>
             <p>Our journey together</p>
+          </router-link>
+          
+          <router-link to="/gallery" class="nav-card">
+            <div class="nav-card-icon">📸</div>
+            <h3>Gallery</h3>
+            <p>View our memories</p>
           </router-link>
           
           <router-link to="/love-jar" class="nav-card">
@@ -80,7 +84,7 @@
 </template>
 
 <script setup>
-// HomePage component
+import heroBackground from '../assets/images/China/china_001.jpg'
 </script>
 
 <style scoped>
@@ -90,53 +94,92 @@
 
 .hero {
   position: relative;
-  height: 100vh;
-  min-height: 600px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
-  background-size: cover;
-  background-position: center;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: start center;
+  padding-top: clamp(6.5rem, 10vh, 8.5rem);
+  background-color: var(--neutral-charcoal);
   color: var(--text-light);
-  text-align: center;
+  overflow: hidden;
 }
 
-.hero-overlay {
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Couple is mid-frame in the portrait — center on them, not the top drapes */
+  object-position: center 42%;
+  display: block;
+}
+
+/* Scrim only behind the headline band (not over faces) */
+.hero-scrim {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.3);
+  height: min(38vh, 22rem);
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.2) 55%,
+    transparent 100%
+  );
 }
 
 .hero-content {
   position: relative;
-  z-index: 1;
-  max-width: 800px;
-  padding: var(--spacing-lg);
+  z-index: 2;
+  width: 100%;
+  max-width: 40rem;
+  padding: 0 var(--spacing-lg);
+  text-align: center;
 }
 
 .hero-title {
-  font-size: var(--font-size-6xl);
-  margin-bottom: var(--spacing-lg);
+  font-size: clamp(2.25rem, 6vw, var(--font-size-6xl));
+  margin-bottom: var(--spacing-md);
   color: var(--text-light);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
   animation: fadeInUp 1s ease;
 }
 
 .hero-subtitle {
-  font-size: var(--font-size-xl);
-  margin-bottom: var(--spacing-3xl);
-  opacity: 0.9;
+  font-size: clamp(1rem, 2.5vw, var(--font-size-xl));
+  margin-bottom: var(--spacing-lg);
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35);
   animation: fadeInUp 1s ease 0.2s both;
 }
 
 .hero-buttons {
   display: flex;
-  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
   justify-content: center;
   animation: fadeInUp 1s ease 0.4s both;
+}
+
+.hero-btn {
+  min-width: 8.5rem;
+}
+
+.hero-btn-outline {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: var(--text-light);
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+}
+
+.hero-btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.95);
+  color: var(--text-primary);
+  border-color: rgba(255, 255, 255, 0.95);
 }
 
 .events-overview {
@@ -162,21 +205,8 @@
   box-shadow: var(--shadow-xl);
 }
 
-.event-card-image {
-  height: 250px;
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-}
-
-.roora-bg {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-}
-
-.wedding-bg {
-  background: linear-gradient(135deg, var(--secondary-color), var(--accent-rose));
-}
-
 .event-card-content {
-  padding: var(--spacing-xl);
+  padding: var(--spacing-2xl) var(--spacing-xl);
   text-align: center;
 }
 
@@ -241,17 +271,27 @@
 }
 
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: var(--font-size-4xl);
+  .hero-bg {
+    object-position: center 40%;
   }
-  
-  .hero-subtitle {
-    font-size: var(--font-size-lg);
+
+  .hero {
+    padding-top: 6.25rem;
   }
-  
+
+  .hero-scrim {
+    height: min(42vh, 20rem);
+  }
+
   .hero-buttons {
     flex-direction: column;
-    align-items: center;
+    align-items: stretch;
+  }
+
+  .hero-btn {
+    width: 100%;
+    max-width: 16rem;
+    margin: 0 auto;
   }
   
   .events-grid {
@@ -260,6 +300,25 @@
   
   .nav-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-height: 740px) {
+  .hero {
+    padding-top: 5.75rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 5.2vw, 3.8rem);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .hero-subtitle {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .hero-buttons {
+    gap: var(--spacing-sm);
   }
 }
 </style>
