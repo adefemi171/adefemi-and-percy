@@ -84,7 +84,7 @@
 </template>
 
 <script setup>
-import heroBackground from '../assets/images/China/china_001.jpg'
+import heroBackground from '../assets/images/China/china_002.jpg'
 </script>
 
 <style scoped>

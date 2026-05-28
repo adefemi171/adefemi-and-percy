@@ -1,0 +1,114 @@
+name: Deploy bundle to FTP
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: deploy-ftp-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      # TEMPORARY: remove after PR failure comments are verified
+      - name: Test PR failure notification
+        if: github.event_name == 'pull_request'
+        run: |
+          mkdir -p .github-actions
+          cat > .github-actions/failure.log <<'EOF'
+          TEST_FAILURE: Intentional failure to verify PR comment workflow.
+          If you see this in the PR comment, commenting works.
+          EOF
+          exit 1
+
+      - name: Deploy via FTP
+        if: success()
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.FTP_SERVER_URL }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: ${{ secrets.FTP_PORT }}
+          local-dir: dist/
+          server-dir: /
+
+      - name: Comment on PR with failure
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const prNumber = context.payload.pull_request.number;
+            const runUrl = `${context.payload.repository.html_url}/actions/runs/${context.runId}`;
+
+            let logs = 'Step failed. Open the workflow run for full logs.';
+            const logPath = '.github-actions/failure.log';
+            if (fs.existsSync(logPath)) {
+              logs = fs.readFileSync(logPath, 'utf8');
+            }
+
+            const marker = '<!-- deploy-workflow-failure -->';
+            const body = [
+              marker,
+              '### Deploy workflow failed',
+              '',
+              `Workflow run: [view logs](${runUrl})`,
+              '',
+              '<details>',
+              '<summary>Failed job logs</summary>',
+              '',
+              '```',
+              logs.trim(),
+              '```',
+              '',
+              '</details>',
+            ].join('\n');
+
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+            });
+
+            const existing = comments.find((comment) => comment.body?.includes(marker));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: prNumber,
+                body,
+              });
+            }
