@@ -3,7 +3,7 @@
     <section class="section love-jar-hero">
       <div class="container">
         <h1 class="page-title">Reason I Love You Jar</h1>
-        <p class="page-subtitle">A digital collection of memories, notes, and reasons we love each other</p>
+        <p class="page-subtitle">A digital collection of memories, notes, and reasons - Share a reason you love Adefemi & Percyline</p>
         <div class="jar-icon">💕</div>
       </div>
     </section>
@@ -13,7 +13,7 @@
       <div class="container">
         <div class="random-note-container">
           <h2 class="section-title">Pick a Note</h2>
-          <p class="section-description">Click the button below to reveal a random love note from our collection</p>
+          <p class="section-description">Click the button below to reveal a random note from our collection</p>
           
           <button 
             @click="pickRandomNote" 

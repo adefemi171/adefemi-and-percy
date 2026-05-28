@@ -1,6 +1,6 @@
 <template>
   <div class="add-note-form-container">
-    <h3 class="form-title">Add a Love Note</h3>
+    <h3 class="form-title">Add a Note</h3>
     <p class="form-subtitle">Share a reason you love Adefemi & Percyline, or a memory you cherish</p>
     
     <form @submit.prevent="handleSubmit" class="add-note-form">
@@ -19,12 +19,11 @@
       </div>
 
       <div class="form-group">
-        <label for="note-author">Your Name *</label>
+        <label for="note-author">Your Name</label>
         <input 
           type="text" 
           id="note-author"
           v-model="formData.author"
-          required
           class="form-input"
           placeholder="Adefemi, Percyline, or your name"
           :class="{ 'error': errors.author }"
@@ -92,11 +91,6 @@ const validateForm = () => {
     return false
   }
 
-  if (!formData.author.trim()) {
-    errors.author = 'Name is required'
-    return false
-  }
-
   return true
 }
 
@@ -110,11 +104,12 @@ const handleSubmit = async () => {
 
   const date = formData.date || new Date().toISOString().split('T')[0]
   const timestamp = Date.now()
+  const author = formData.author.trim() || 'Anonymous'
 
   try {
     const docRef = await addDoc(collection(db, NOTES_COLLECTION), {
       content: formData.content.trim(),
-      author: formData.author.trim(),
+      author,
       date,
       timestamp
     })
@@ -122,7 +117,7 @@ const handleSubmit = async () => {
     const note = {
       id: docRef.id,
       content: formData.content.trim(),
-      author: formData.author.trim(),
+      author,
       date,
       timestamp
     }
