@@ -12,7 +12,7 @@
     <section class="section random-note-section">
       <div class="container">
         <div class="random-note-container">
-          <h2 class="section-title">Pick a Note</h2>
+          <h2 class="section-title">Reveal a Note</h2>
           <p class="section-description">Click the button below to reveal a random note from our collection</p>
           
           <button 
@@ -20,7 +20,7 @@
             class="btn btn-primary pick-note-btn"
             :disabled="notes.length === 0 || loading"
           >
-            {{ currentNote ? 'Pick Another Note' : 'Pick a Note' }}
+            {{ currentNote ? 'Reveal Another Note' : 'Reveal a Note' }}
           </button>
 
           <div v-if="loadError" class="empty-state error-state">
