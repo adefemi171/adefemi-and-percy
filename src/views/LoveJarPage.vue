@@ -8,19 +8,19 @@
       </div>
     </section>
 
-    <!-- Random Note Section -->
+    <!-- Notes Section -->
     <section class="section random-note-section">
       <div class="container">
         <div class="random-note-container">
           <h2 class="section-title">Reveal a Note</h2>
-          <p class="section-description">Click the button below to reveal a random note from our collection</p>
-          
+          <p class="section-description">First reveal is random, then each pick shows the next note.</p>
+
           <button 
-            @click="pickRandomNote" 
+            @click="revealOrPickNote" 
             class="btn btn-primary pick-note-btn"
             :disabled="notes.length === 0 || loading"
           >
-            {{ currentNote ? 'Reveal Another Note' : 'Reveal a Note' }}
+            {{ currentNote ? 'Pick Another Note' : 'Reveal a Note' }}
           </button>
 
           <div v-if="loadError" class="empty-state error-state">
@@ -44,32 +44,6 @@
     <section class="section add-note-section">
       <div class="container">
         <AddNoteForm @note-added="handleNoteAdded" />
-      </div>
-    </section>
-
-    <!-- All Notes Section (Optional) -->
-    <section v-if="showAllNotes && notes.length > 0" class="section all-notes-section">
-      <div class="container">
-        <div class="notes-header">
-          <h2 class="section-title">All Notes</h2>
-          <button @click="toggleAllNotes" class="btn btn-secondary">
-            {{ showAllNotes ? 'Hide All Notes' : 'Show All Notes' }}
-          </button>
-        </div>
-
-        <div class="notes-grid">
-          <div 
-            v-for="note in sortedNotes" 
-            :key="note.id"
-            class="note-item"
-          >
-            <div class="note-item-content">{{ note.content }}</div>
-            <div class="note-item-footer">
-              <span class="note-item-author">{{ note.author }}</span>
-              <span class="note-item-date">{{ formatDate(note.date) }}</span>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -98,7 +72,7 @@ const NOTES_COLLECTION = 'loveJarNotes'
 const notes = ref([])
 const currentNote = ref(null)
 const noteRevealed = ref(false)
-const showAllNotes = ref(false)
+const currentIndex = ref(-1)
 const loading = ref(false)
 const loadError = ref(false)
 
@@ -111,6 +85,15 @@ const loadNotes = async () => {
       id: doc.id,
       ...doc.data()
     }))
+    if (notes.value.length === 0) {
+      currentNote.value = null
+      noteRevealed.value = false
+      currentIndex.value = -1
+    } else if (currentIndex.value >= notes.value.length) {
+      currentIndex.value = 0
+      currentNote.value = sortedNotes.value[0]
+      noteRevealed.value = true
+    }
   } catch (err) {
     console.error('Error loading notes:', err)
     loadError.value = true
@@ -120,27 +103,30 @@ const loadNotes = async () => {
   }
 }
 
-const pickRandomNote = () => {
-  if (notes.value.length === 0) return
-  
+const revealOrPickNote = () => {
+  if (sortedNotes.value.length === 0) return
+
   noteRevealed.value = false
-  
+
   setTimeout(() => {
-    const randomIndex = Math.floor(Math.random() * notes.value.length)
-    currentNote.value = notes.value[randomIndex]
+    if (currentIndex.value === -1) {
+      // First reveal: random note
+      currentIndex.value = Math.floor(Math.random() * sortedNotes.value.length)
+    } else {
+      // Subsequent picks: deterministic next note
+      currentIndex.value = (currentIndex.value + 1) % sortedNotes.value.length
+    }
+    currentNote.value = sortedNotes.value[currentIndex.value]
     noteRevealed.value = true
   }, 300)
 }
 
-const handleNoteAdded = (note) => {
-  loadNotes()
-  // Optionally show the newly added note
-  currentNote.value = note
-  noteRevealed.value = true
-}
-
-const toggleAllNotes = () => {
-  showAllNotes.value = !showAllNotes.value
+const handleNoteAdded = async () => {
+  await loadNotes()
+  // Reset flow so next reveal starts random again
+  currentNote.value = null
+  noteRevealed.value = false
+  currentIndex.value = -1
 }
 
 const sortedNotes = computed(() => {
@@ -245,19 +231,6 @@ onMounted(() => {
   background-color: var(--bg-secondary);
 }
 
-.all-notes-section {
-  background-color: var(--bg-primary);
-}
-
-.notes-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: var(--spacing-3xl);
-  flex-wrap: wrap;
-  gap: var(--spacing-lg);
-}
-
 .notes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -331,14 +304,11 @@ onMounted(() => {
   .page-title {
     font-size: var(--font-size-4xl);
   }
-  
-  .notes-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .notes-grid {
-    grid-template-columns: 1fr;
+
+  .pick-note-btn {
+    width: 100%;
+    max-width: 320px;
+    font-size: var(--font-size-lg);
   }
 }
 </style>
