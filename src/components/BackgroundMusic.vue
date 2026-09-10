@@ -7,7 +7,7 @@
       @play="isPlaying = true"
       @pause="isPlaying = false"
     >
-      <source src="/La_Mer_Charles_Trenet.mp3" type="audio/mpeg" />
+      <source src="/Grover_Washington_Jr._ft._Bill_Withers_-_Just_the_two_of_us.mp3" type="audio/mpeg" />
       Your browser does not support the audio element.
     </audio>
     <button

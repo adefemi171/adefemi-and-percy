@@ -10,7 +10,7 @@
         <p class="thank-you-see-you">
           See you at the event!
         </p>
-        <p class="thank-you-date">August 28–29, 2026 · Roora Celebration</p>
+        <p class="thank-you-date">August 28-29, 2026 · Roora Celebration</p>
         <router-link to="/roora" class="btn btn-primary">Back to Roora</router-link>
       </div>
     </section>

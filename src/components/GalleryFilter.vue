@@ -24,13 +24,17 @@ const props = defineProps({
   filters: {
     type: Object,
     required: true
+  },
+  initialPlace: {
+    type: String,
+    default: 'all'
   }
 })
 
 const emit = defineEmits(['filter-change'])
 
 const localFilters = ref({
-  place: 'all'
+  place: props.initialPlace || 'all'
 })
 
 const updateFilters = () => {
@@ -40,6 +44,11 @@ const updateFilters = () => {
 watch(() => props.filters, () => {
   updateFilters()
 }, { immediate: true })
+
+watch(() => props.initialPlace, (place) => {
+  localFilters.value.place = place || 'all'
+  updateFilters()
+})
 </script>
 
 <style scoped>

@@ -10,6 +10,32 @@
       </div>
     </section>
 
+    <!-- Welcome Dinner Section -->
+    <section class="section welcome-dinner-section">
+      <div class="container">
+        <h2 class="section-title">Welcome Dinner</h2>
+        <p class="welcome-dinner-intro">
+          The evening before our Roora celebration, we're hosting an intimate welcome
+          dinner for friends and visiting guests to kick off the festivities together.
+        </p>
+
+        <div class="welcome-dinner-meta">
+          <div class="meta-item">
+            <span class="location-icon" aria-hidden="true">📍</span>
+            <span>
+              <strong>Location:</strong>
+              <a
+                href="https://www.google.com/maps?um=1&ie=UTF-8&fb=1&gl=us&sa=X&geocode=KVOqztfxuzEZMTCVPxz-ESXO&daddr=Enterprise+Road,+Harare,+Zimbabwe"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Upstate Harare, Enterprise Road, Harare, Zimbabwe</a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <!-- Itinerary Section -->
     <section class="section itinerary-section">
       <div class="container">
@@ -37,19 +63,12 @@
       </div>
     </section>
 
-    <!-- RSVP Section -->
-    <section class="section rsvp-section">
-      <div class="container">
-        <RSVPForm />
-      </div>
-    </section>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import CountdownTimer from '../components/CountdownTimer.vue'
-import RSVPForm from '../components/RSVPForm.vue'
 
 // Set the Roora date - update this with the actual date
 const rooraDate = ref('2026-08-28T18:00:00') // Format: YYYY-MM-DDTHH:mm:ss
@@ -68,7 +87,7 @@ const itinerary = ref([
     time: '7:30 PM',
     title: 'Dinner & Celebration',
     description: 'Enjoy a delightful dinner followed by traditional celebrations and music.',
-    location: '957 Shawasha Hills, Harare, Zimbabwe'
+    location: 'Upstate Harare, Enterprise Road, Harare, Zimbabwe'
   },
   {
     date: 'August 29, 2026',
@@ -101,6 +120,47 @@ const itinerary = ref([
   font-size: var(--font-size-xl);
   color: var(--text-secondary);
   margin-bottom: var(--spacing-4xl);
+}
+
+.welcome-dinner-section {
+  background-color: var(--bg-secondary);
+}
+
+.welcome-dinner-intro {
+  max-width: 720px;
+  margin: 0 auto var(--spacing-xl);
+  text-align: center;
+  font-size: var(--font-size-lg);
+  color: var(--text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+.welcome-dinner-meta {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--spacing-3xl);
+}
+
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--bg-primary);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-md);
+  color: var(--text-primary);
+  font-size: var(--font-size-base);
+}
+
+.meta-item strong {
+  color: var(--primary-color);
+}
+
+.meta-item a {
+  color: var(--primary-color);
+  font-weight: var(--font-weight-medium);
+  text-decoration: underline;
 }
 
 .itinerary-section {
@@ -208,10 +268,6 @@ const itinerary = ref([
 
 .location-icon {
   font-size: var(--font-size-lg);
-}
-
-.rsvp-section {
-  background-color: var(--bg-secondary);
 }
 
 @media (max-width: 768px) {
