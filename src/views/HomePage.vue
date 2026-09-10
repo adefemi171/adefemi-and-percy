@@ -110,7 +110,7 @@ import heroBackground from '../assets/images/China/china_001.jpg'
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Couple is mid-frame in the portrait — center on them, not the top drapes */
+  /* Couple is mid-frame in the portrait, so center on them, not the top drapes */
   object-position: center 42%;
   display: block;
 }

@@ -12,6 +12,7 @@
       <div class="container">
         <GalleryFilter 
           :filters="filterOptions"
+          :initial-place="initialPlace"
           @filter-change="handleFilterChange"
         />
       </div>
@@ -103,16 +104,29 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
 import GalleryFilter from '../components/GalleryFilter.vue'
 import { getAllGalleryImages, getFilterOptions } from '../utils/imageLoader.js'
 
-const activeFilters = ref({
-  place: 'all'
-})
+const route = useRoute()
 
 // Load actual images from assets folder
 const images = ref([])
 const filterOptions = ref(getFilterOptions())
+
+// Pre-select an album when arriving via ?place= (e.g. from the Our Story page),
+// but only if that album actually exists; otherwise show everything.
+const initialPlace = computed(() => {
+  const requested = route.query.place
+  if (requested && filterOptions.value.places.includes(requested)) {
+    return requested
+  }
+  return 'all'
+})
+
+const activeFilters = ref({
+  place: initialPlace.value
+})
 
 onMounted(() => {
   images.value = getAllGalleryImages()

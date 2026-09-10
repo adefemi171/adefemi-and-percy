@@ -11,7 +11,7 @@
     <section class="section registry-section">
       <div class="container">
         <h2 class="section-title">Ways to Give</h2>
-        <p class="section-description">Ways to give—we appreciate your thoughtfulness.</p>
+        <p class="section-description">Ways to give. We appreciate your thoughtfulness.</p>
         <div class="registry-grid">
           <div 
             v-for="(item, index) in registryItems" 

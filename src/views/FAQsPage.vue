@@ -50,38 +50,6 @@ import { ref } from 'vue'
 
 const faqs = ref([
   {
-    question: 'What is Roora?',
-    answer: "A roora celebration is a traditional Shona marriage ceremony in Zimbabwe where a prospective groom pays a bride price (lobola) to the bride's family, symbolizing the union of two families. It is a festive occasion involving negotiations, gifts, traditional music, dancing, and large feasts, often serving as a, or in addition to, a formal wedding",
-    open: false
-  },
-  {
-    question: 'When is the Roora celebration?',
-    answer: 'The Roora celebration is scheduled for August, 2026. Please check the Roora page for the exact date and time.',
-    open: false
-  },
-  {
-    question: 'Do I need to RSVP?',
-    answer: 'Yes, please RSVP through our website so we can plan accordingly. You can find the RSVP form on the Roora page.',
-    open: false
-  },
-  {
-    question: 'What should I wear?',
-    answer: 'Please feel free to wear traditional attire or semi-formal clothing that makes you feel comfortable and celebratory. Our colour theme is neutrals and earth tones—see the palette below for inspiration.',
-    open: false,
-    image: '/color_palette.jpeg',
-    imageAlt: 'Natural earth tone colour palette for dress code'
-  },
-  {
-    question: 'Can I bring a plus one?',
-    answer: 'Please indicate the number of guests when you RSVP. We\'d love to celebrate with your loved ones!',
-    open: false
-  },
-  {
-    question: 'Will there be food and drinks?',
-    answer: 'Yes, we\'ll be providing a full meal and refreshments. Please let us know of any dietary restrictions when you RSVP.',
-    open: false
-  },
-  {
     question: 'What about the wedding?',
     answer: 'Wedding details are still being finalized. We\'ll update the website as soon as we have more information. You can sign up for updates on the Wedding page.',
     open: false
