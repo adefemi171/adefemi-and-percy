@@ -54,6 +54,23 @@ This will:
 - Resize images larger than 2000px
 - Show you the size reduction for each image
 
+## Remove Audio from One Folder of Videos
+
+To mute every MP4 or MOV in one gallery folder while keeping the video quality
+unchanged, run:
+
+```bash
+# Check exactly which videos would be muted first
+npm run remove-video-audio -- Zimbabwe --dry-run
+
+# Remove the audio from only the Zimbabwe videos
+npm run remove-video-audio -- Zimbabwe
+```
+
+The command only accepts a single direct folder under `src/assets/images`.
+Before replacing each video, it saves the original in
+`src/assets/images-backup/<folderName>/`.
+
 ## Option 2: Using FFmpeg (What You Have)
 
 Since you have FFmpeg installed, you can use this script:
