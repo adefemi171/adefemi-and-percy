@@ -63,6 +63,26 @@
       </div>
     </section>
 
+    <section class="section roora-gallery-section">
+      <div class="container roora-gallery-content">
+        <h2 class="section-title">Roora Memories</h2>
+        <p>Relive the photos and videos from our Roora celebration.</p>
+        <div class="roora-gallery-actions">
+          <router-link :to="{ name: 'Gallery', query: { place: 'Roora' } }" class="btn btn-primary">
+            View the Roora Gallery
+          </router-link>
+          <a
+            href="https://drive.google.com/drive/folders/17FH3NCfnIObHBZbPhAh2-Xj9Hu-9geFr?usp=sharing"
+            class="btn btn-secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            View the Roora Drive
+          </a>
+        </div>
+      </div>
+    </section>
+
   </div>
 </template>
 
@@ -77,17 +97,17 @@ const rooraDate = ref('2026-08-28T18:00:00') // Format: YYYY-MM-DDTHH:mm:ss
 const itinerary = ref([
   {
     date: 'August 28, 2026',
-    time: '6:00 PM',
+    time: '7:30 PM',
+    title: 'Dinner & After Party',
+    description: 'Join us for dinner and an after party as we celebrate together.',
+    location: 'Upstate Harare, Enterprise Road, Harare, Zimbabwe'
+  },
+  {
+    date: 'August 29, 2026',
+    time: '9:00 AM',
     title: 'Welcome Reception',
     description: 'Join us for a warm welcome as we begin our celebration together.',
     location: '957 Shawasha Hills, Harare, Zimbabwe'
-  },
-  {
-    date: 'August 28, 2026',
-    time: '7:30 PM',
-    title: 'Dinner & Celebration',
-    description: 'Enjoy a delightful dinner followed by traditional celebrations and music.',
-    location: 'Upstate Harare, Enterprise Road, Harare, Zimbabwe'
   },
   {
     date: 'August 29, 2026',
@@ -165,6 +185,29 @@ const itinerary = ref([
 
 .itinerary-section {
   background-color: var(--bg-primary);
+}
+
+.roora-gallery-section {
+  background-color: var(--bg-secondary);
+  text-align: center;
+}
+
+.roora-gallery-content {
+  max-width: 640px;
+}
+
+.roora-gallery-content p {
+  color: var(--text-secondary);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  margin: 0 auto var(--spacing-xl);
+}
+
+.roora-gallery-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-md);
 }
 
 .timeline {
