@@ -54,7 +54,7 @@
         </div>
 
         <div class="chapter-text">
-          <div class="chapter-date">{{ formatDate(chapter.date) }}</div>
+          <div class="chapter-date">{{ chapter.dateLabel || formatDate(chapter.date) }}</div>
           <h2 class="chapter-title">{{ chapter.title }}</h2>
           <p v-if="chapter.location" class="chapter-location">
             <span class="location-icon" aria-hidden="true">📍</span>{{ chapter.location }}
@@ -176,10 +176,41 @@ const milestones = ref([
     date: '2026-07-25',
     title: 'The Surprise Proposal',
     description:
-      'A beautiful surprise proposal in Stockholm, filled with love, happy tears, and the beginning of our forever.',
+      'A beautiful surprise proposal in Stockholm, filled with love, laughter, and the beginning of our forever.',
     location: 'Stockholm, Sweden',
     gallery: 'Proposal',
     image: getFirstImageByLocation('Proposal') || 'https://via.placeholder.com/800x600?text=Proposal'
+  },
+  {
+    id: '12',
+    date: '2026-08-29',
+    title: 'Our Roora Celebration',
+    description:
+      'In August, we celebrated our Roora surrounded by family, tradition, and so much love.',
+    location: 'Harare, Zimbabwe',
+    gallery: 'Roora',
+    image: getFirstImageByLocation('Roora') || 'https://via.placeholder.com/800x600?text=Roora'
+  },
+  {
+    id: '13',
+    date: '2026-08-30',
+    dateLabel: 'August–September 2026',
+    title: 'Zimbabwe & Victoria Falls',
+    description:
+      'Our August and September adventure through Zimbabwe included unforgettable moments at the breathtaking Victoria Falls.',
+    location: 'Zimbabwe & Victoria Falls',
+    gallery: 'Zimbabwe',
+    image: getFirstImageByLocation('Zimbabwe') || 'https://via.placeholder.com/800x600?text=Zimbabwe'
+  },
+  {
+    id: '14',
+    date: '2026-09-01',
+    title: "Percy's Birthday in Montenegro",
+    description:
+      "We celebrated Percy's birthday in September with a beautiful Montenegro escape full of sunshine, sea views, and memories to treasure.",
+    location: 'Montenegro',
+    gallery: 'Montenegro',
+    image: getFirstImageByLocation('Montenegro') || 'https://via.placeholder.com/800x600?text=Montenegro'
   }
 ])
 
